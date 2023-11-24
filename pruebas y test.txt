@@ -1,0 +1,509 @@
+isalpha 
+		#include <stdio.h>
+		#include <unistd.h>
+		int ft_isalpha(char *str)
+		{
+		while (*str) 
+		{
+			write(1, str++, 1);
+		}
+		}
+
+		void main ()
+		{
+		char *c;
+		c = "hola mundo";
+		ft_isalpha(c); 
+		
+		}
+	segunda prueba no funciona como espero se salta letras Resultado holmuno 
+		
+		1	  #include <stdio.h>
+		2	  #include <unistd.h>
+		3	  int ft_isalpha(char *str)
+		4	{
+		5	    while ( *str)
+		6	    {
+		7	        if(*str >= 101 && *str <= 132)
+		8	         write(1, str++, 1);
+		9	      else 
+		10	        str++;
+		11	    }
+		12	    return(0);
+		13	}
+		14	  
+		15	  void main (void)
+		16	  {
+		17	    char *c;
+		18	    c = "hola mundo";
+		19	    ft_isalpha(c); 
+		20	    
+		21	  }
+	chat gpt corrigio el anterior codigo
+		#include <stdio.h>
+		#include <unistd.h>
+
+		int ft_isalpha(char *str)
+		{
+			while (*str)
+			{
+				if (*str >= 97 && *str <= 122)
+					write(1, str++, 1);
+				else
+					str++;
+			}
+			return 0;
+		}
+
+		int main(void)
+		{
+			char *c;
+			c = "hola mundo";
+			ft_isalpha(c);
+
+			return 0;
+		}
+	probando como funciona la funcion original 
+		#include <stdio.h>
+		#include <ctype.h>
+
+		void ft_isalpha_string(char *str) {
+			while (*str) {
+				if (isalpha(*str)) {
+					putchar(*str);
+				}
+				str++;
+			}
+			putchar('\n');
+		}
+
+		int main() {
+			char *c = "hola mundo";
+			ft_isalpha_string(c);
+
+			return (0);
+		}
+
+	prueba 2 para ver si funciona espoiler no funciona 
+		#include <stdio.h>
+		#include <ctype.h>
+
+		int ft_isalpha(char *str) {
+			while (*str) {
+				if ((*str >= 65 && *str <= 90) || (*str >= 97 && *str <= 122))
+				{
+					return 1;  
+				}
+				str++;
+			}
+			return 0; 
+		}
+
+		void print_is_alpha(char *str)
+		{
+			while (*str) {
+				if (!ft_isalpha(str)) 
+				{
+					printf("%c", *str);
+				}
+				str++;
+			}
+			putchar('\n');
+		}
+
+		int main(void) {
+			char *str;
+			str = "hola mundo";
+			print_is_alpha(str);
+
+			return 0;
+		}
+	chatgpt solution
+		#include <stdio.h>
+
+		int ft_isalpha(char *str) {
+		    while (*str) {
+		        if ((*str >= 65 && *str <= 90) || (*str >= 97 && *str <= 122))
+		        {
+		            return 1;  
+		        }
+		        str++;
+		    }
+		    return 0; 
+		}
+		int main() {
+		    // Ejemplo de uso
+		    char prueba1[] = "Hola123";
+		    char prueba2[] = "12345";
+
+		    // Probando la función con la primera cadena
+		    if (ft_isalpha(prueba1)) {
+		        printf("La cadena '%s' contiene caracteres alfabéticos.\n", prueba1);
+		    } else {
+		        printf("La cadena '%s' no contiene caracteres alfabéticos.\n", prueba1);
+		    }
+
+		    // Probando la función con la segunda cadena
+		    if (ft_isalpha(prueba2)) {
+		        printf("La cadena '%s' contiene caracteres alfabéticos.\n", prueba2);
+		    } else {
+		        printf("La cadena '%s' no contiene caracteres alfabéticos.\n", prueba2);
+		    }
+
+		    return 0;
+		}
+ft_isdigit
+	primer intento con lo aprendido de antes fue mas sencillo 
+
+		#include "libft.h"
+
+		int ft_isdigit(char *str)
+		{
+			while(*str)
+			{
+				if(*str >= '0' && str <= '9')
+					return (1);
+				str++;
+			}
+		}
+	estaba mal corregido y con main 
+	#include <stdio.h>
+
+		int ft_isdigit(char *str)
+		{
+		    while (*str)
+		    {
+		        if (*str >= '0' && *str <= '9')
+		            return 1;
+		        str++;
+		    }
+		    return 0;
+		}
+
+		int main(void)
+		{
+		    char *str;
+		    str = "123234";
+		    printf("%i", ft_isdigit(str));
+		    return 0;
+		}
+	empezamos con ft_substr la ia me hizo una lista por donde empezar hacerlo 
+
+
+    1Verifico que los parámetros sean válidos.
+
+    Para esto, compruebo que la cadena s no sea NULL, que el índice start sea mayor o igual a 0 y que la longitud len sea mayor o igual a 0. Si alguno de estos parámetros no es válido, la función debe devolver NULL.
+
+    2Calculamos el tamaño de la subcadena.
+
+    El tamaño de la subcadena es el número de caracteres que la componen. Si len es mayor que la longitud de la cadena s desde el índice start, el tamaño de la subcadena debe ser la longitud de la cadena desde el índice start.
+
+    3Reservamos memoria para la subcadena.
+
+    Para esto, usamos la función malloc(), pasando como tamaño el tamaño de la subcadena calculado en el paso anterior. Si malloc() devuelve NULL, la función debe devolver NULL.
+
+    4Copiamos la subcadena a la memoria reservada.
+
+    Para esto, utilizamos un bucle for para copiar cada carácter de la cadena s desde el índice start a la memoria reservada.
+
+    5Agregamos el caracter nulo al final de la subcadena.
+
+    El caracter nulo es el carácter que indica el final de una cadena. Para agregarlo al final de la subcadena, utilizamos el operador [] para acceder al último elemento de la memoria reservada y asignarle el valor '\0'.
+
+    6Devolvemos la subcadena.
+
+    Si todos los pasos anteriores han sido exitosos, la función debe devolver la subcadena.
+		#include<stdio.h>
+
+char    *ft_substr(char const *s, unsigned int start, size_t len)
+{
+    char    *substring;
+    int c;
+    c = 0;
+
+    substring = malloc(len + 1);
+    if (s ==  NULL  || start < 0 || len < 0 || substring == NULL)
+    {
+        return(NULL);
+    }
+     while (len--)
+    {
+        substring[c++] = s[start++];
+    }
+    
+    substring[c] = '\0';
+    return substring;
+}
+int main(void)
+{
+    char *s = "hola mundo";
+    printf("%s", ft_substr(s, 5, 3));
+    return 0;
+}
+funcion strlen
+	primer intento 
+			int ft_strlen(*str)
+		{
+			int c;
+
+			c = 0;
+
+			while(str---)
+			{
+				c++;
+			}
+			return(c);
+		}
+	corregido 
+			#include<stdio.h>
+
+
+			int ft_strlen(char *str)
+			{
+			    int c;
+
+			    c = 0;
+			    while(str[c] != '\0')
+			    {
+			        c++;
+			    }
+			    return(c);
+			}
+			int main(void)
+			{
+			    char *s = "hola mundo";
+			    printf("%i", ft_strlen(s));
+			    return 0;
+			}
+memset
+	codigo internet
+	#include <stdio.h>
+	#include <string.h>
+
+
+	void	*ft_memset(void *b, int c, size_t len)
+	{
+		char	*start;
+
+		if (b == NULL)
+			return (NULL);
+		start = b;
+		while (len)
+		{
+			*start = c;
+			start++;
+			len--;
+		}
+		return (b);
+	}
+
+	int main() {
+	    char miCadena[20];
+	    char micadena[20];
+	
+
+	    // Inicializar miCadena con el valor 'A'
+	    memset(miCadena, 'A', 20);
+	    ft_memset(micadena, 'A', 20);
+
+	    // Imprimir la cadena
+	    printf("Cadena: %s\n", miCadena);
+	    printf("Cadena: %s\n", micadena);
+
+	    return 0;
+	}
+
+	primer intento
+		void *ft_memset(void *str, int c, size_t n)
+		{
+			char *f;
+			int cont;
+
+			f = *str;
+			cont = 0;
+
+			if (str == NULL || n == 0 )
+			return(NULL);
+			while(len--)
+			{
+				f[cont] = c;
+				cont++; 
+			}
+		}
+		despues de errores minisculos 
+			void	*ft_memset(void *str, int c, size_t n)
+			{
+				char *f;
+				int cont;
+
+				f = str;
+				cont = 0;
+
+				if (str == NULL || n == 0)
+					return (NULL);
+				while (n--)
+				{
+					f[cont] = c;
+					cont++;
+				}
+			}
+bzero
+	primer intento 
+		void bzero(void *s, size_t n)
+		{
+			char *str;
+
+			str = s;
+
+			while (n--)
+				str[n] = 0;
+		}
+	final 
+		void ft_bzero(void *s, size_t n)
+		{
+			char *str;
+
+			str = s;
+
+			while (n--) 
+			{
+				str[n] = 0;
+			}
+		}
+
+memcpy	
+	primer intento
+		void ft_memcpy(void *restrict dst, const void *restrict src, size_t n)
+		{
+			dst[n+1] = '\n' 
+			while(n--)
+			dst[n] = src[n] 
+		}
+	
+	intento final
+		void ft_memcpy(void *restrict dst, const void *restrict src, size_t n)
+		{
+			char *destino;
+			const char *source;
+
+			destino = dst;  
+			source = src;
+			destino[n] = '\0';  
+			while(n--)
+			{
+			destino[n] = source[n];
+			}
+		}	
+		
+
+!!!!!revisar bzero y todos los mem estan mal !!!
+mem move
+
+		void *ft_memmove(void *dst, const void *src, unsigned int  len)
+		{
+		char  *s;
+		char *d;
+
+			s = (char*)src;
+			d = (char*)dst;
+
+			while(*d-- && len != 0)
+			{
+				s* = d*;
+			}
+
+
+		}
+
+
+		int main() {
+
+		return 0;
+		}
+
+		final 
+				void *ft_memmove(void *dst, const void *src, unsigned int  len)
+			6	{
+			7	  int c ;
+			8	  char  *s;
+			9	  char *d;
+			10	
+			11	    s = (char*)src;
+			12	    d = (char*)dst;
+			13	    c = 0;
+			14	
+			15	    while(*d != '\n' && len != 0)
+			16	    {
+			17	        *d++ = *s++;
+			18	        len--;
+			19	    }
+			20	
+			21	
+			22	}
+	memmove final 
+	#include <stdio.h>
+#include <string.h>
+
+
+void *ft_memmove(void *dst, const void *src, unsigned int  len)
+{
+  char  *s;
+  char *d;
+
+    s = (char*)src;
+    d = (char*)dst;
+
+  while(len != 0)
+    {
+      if (dst == '\n')
+        return(0);
+        
+      else 
+        *d++ = *s++;
+        len--;
+    }
+
+
+}
+
+
+int main() {
+  char src[] = "Hello, World!";
+    char dst[20];
+
+    ft_memmove(dst, src, 7);
+}
+https://pythontutor.com/render.html#code=%23include%20%3Cstdio.h%3E%0A%23include%20%3Cstring.h%3E%0A%0Aint%20main%28%29%20%7B%0A%20%20%20%20char%20src%5B%5D%20%3D%20%22Hello,%20World!%22%3B%0A%20%20%20%20char%20dst%5B20%5D%3B%0A%0A%20%20%20%20//%20Copia%207%20bytes%20desde%20src%20a%20dst%0A%20%20%20%20memmove%28dst,%20src,%207%29%3B%0A%0A%20%20%20%20//%20Agrega%20un%20car%C3%A1cter%20nulo%20al%20final%20de%20la%20cadena%20destino%0A%20%20%20%20dst%5B7%5D%20%3D%20'%5C0'%3B%0A%0A%20%20%20%20//%20Imprime%20la%20cadena%20destino%0A%20%20%20%20printf%28%22Copia%20simple%3A%20%25s%5Cn%22,%20dst%29%3B%0A%0A%20%20%20%20return%200%3B%0A%7D%0A&cumulative=false&curInstr=7&heapPrimitives=nevernest&mode=display&origin=opt-frontend.js&py=c_gcc9.3.0&rawInputLstJSON=%5B%5D&textReferences=false
+https://pythontutor.com/render.html#code=%23include%20%3Cstdio.h%3E%0A%23include%20%3Cstring.h%3E%0A%0Aint%20main%28%29%20%7B%0A%20%20%20%20char%20str%5B%5D%20%3D%20%22Hello,%20World!%22%3B%0A%20%20%20%20char%20buffer%5B20%5D%3B%0A%0A%20%20%20%20//%20Superposici%C3%B3n%3A%20Copia%205%20bytes%20desde%20el%20inicio%20de%20str%20a%20una%20posici%C3%B3n%20dentro%20de%20str%0A%20%20%20%20memmove%28str%20%2B%206,%20str,%205%29%3B%0A%0A%20%20%20%20//%20Imprime%20la%20cadena%20modificada%0A%20%20%20%20printf%28%22Superposici%C3%B3n%3A%20%25s%5Cn%22,%20str%29%3B%0A%0A%20%20%20%20return%200%3B%0A%7D&cumulative=false&heapPrimitives=nevernest&mode=edit&origin=opt-frontend.js&py=c_gcc9.3.0&rawInputLstJSON=%5B%5D&textReferences=false
+https://pythontutor.com/visualize.html#code=%23include%20%3Cstdio.h%3E%0A%23include%20%3Cstring.h%3E%0A%0A%0Avoid%20*ft_memmove%28void%20*dst,%20const%20void%20*src,%20unsigned%20int%20%20len%29%0A%7B%0A%20%20char%20%20*s%3B%0A%20%20char%20*d%3B%0A%0A%20%20%20%20s%20%3D%20%28char*%29src%3B%0A%20%20%20%20d%20%3D%20%28char*%29dst%3B%0A%0A%20%20while%28len%20!%3D%200%29%0A%20%20%20%20%7B%0A%20%20%20%20%20%20if%20%28dst%20%3D%3D%20'%5Cn'%29%0A%20%20%20%20%20%20%20%20return%280%29%3B%0A%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20else%20%0A%20%20%20%20%20%20%20%20*d%2B%2B%20%3D%20*s%2B%2B%3B%0A%20%20%20%20%20%20%20%20len--%3B%0A%20%20%20%20%7D%0A%0A%0A%7D%0A%0A%0Aint%20main%28%29%20%7B%0A%20%20char%20src%5B%5D%20%3D%20%22Hello,%20World!%22%3B%0A%20%20%20%20char%20dst%5B20%5D%3B%0A%0A%20%20%20%20ft_memmove%28dst,%20src,%207%29%3B%0A%7D&cumulative=false&heapPrimitives=nevernest&mode=edit&origin=opt-frontend.js&py=c_gcc9.3.0&rawInputLstJSON=%5B%5D&textReferences=false
+
+	#include <stdio.h>
+#include <string.h>
+int ft_strcmp(const char *s1, const char *s2)
+{
+    while(*s1)
+    {
+        if(*s1 == *s2)
+        {
+            s1++;
+            s2++;
+        }
+        else
+            return(*s1-*s2);
+    }
+    return(0);
+}
+
+int main() {
+    char *str = "Hello, World!";
+    char *c ="Hello, World!";
+    
+    printf("Encontrado: %i", ft_strcmp(str,c));
+    
+   
+
+    return 0;
+}
+
+no se que codigo
+https://pythontutor.com/visualize.html#code=%23include%20%3Cstdio.h%3E%0A%23include%20%3Cstring.h%3E%0Achar%20*strstr%28const%20char%20*haystack,%20const%20char%20*needle%29%0A%7B%0A%20%20int%20t%3B%0A%20%20%0A%20%20%0A%20%20%20%20while%20%28*haystack%29%0A%20%20%20%20%7B%0A%20%20%20%20%20%20t%3D0%3B%0A%20%20%20%20%20%20while%20%28haystack%5Bt%5D%20%3D%3D%20*needle%20%29%0A%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20%20t%2B%2B%3B%0A%20%20%20%20%20%20%20%20%20%20needle%2B%2B%3B%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20if%20%28*needle%20%3D%3D%20'%5C0'%29%0A%20%20%20%20%20%20%20%20%20%20return%28%28char*%29haystack%29%3B%0A%20%20%20%20%20%20haystack%2B%2B%3B%0A%20%20%20%20%7D%0A%20%20%20%20return%28NULL%29%3B%0A%7D%0Aint%20main%28%29%20%7B%0A%20%20%20%20char%20*str%20%3D%20%22las%20cosas%20de%20la%20vida%20y%20lo%20que%20tiene%20%22%3B%0A%20%20%20%20char%20*c%20%3D%22l%22%3B%0A%20%20%20%20char%20*p%3B%0A%20%20%20%20%0A%20%20%20%20p%20%3D%20strstr%28str,c%29%3B%0A%20%20%0A%20%20%20%20printf%28%22Encontrado%3A%20%25s%22,p%20%29%3B%0A%20%20%20%20%0A%20%20%20%20return%200%3B%0A%7D&cumulative=false&heapPrimitives=nevernest&mode=edit&origin=opt-frontend.js&py=c_gcc9.3.0&rawInputLstJSON=%5B%5D&textReferences=falseb
